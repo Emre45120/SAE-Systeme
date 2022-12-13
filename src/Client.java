@@ -40,6 +40,13 @@ public class Client {
                 public void run() {
                     try {
                         msg = in.readLine();
+                        while(msg != null){
+                            System.out.println("Serveur : "+msg);
+                            msg = in.readLine();
+                        }
+                        System.out.println("Serveur déconnecté");
+                        out.close();
+                        socket.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
