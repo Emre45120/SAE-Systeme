@@ -35,28 +35,6 @@ public class Serveur{
 
             envoyer.start();
 
-            Thread recevoir = new Thread(new Runnable() {
-                String msg;
-                @Override
-                public void run() {
-                    try {
-                        msg = in.readLine();
-                        while(msg != null){
-                            System.out.println("Client : "+msg);
-                            msg = in.readLine();
-                        }
-                        System.out.println("Client déconnecté");
-                        out.close();
-                        socketDuServeur.close();
-                        socketServer.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println("Client : "+msg);
-                }
-            });
-
-            recevoir.start();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
