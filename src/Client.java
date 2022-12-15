@@ -5,10 +5,10 @@ public class Client implements Runnable{
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
-    private Serveur2 serveur;
+    private Serveur serveur;
     private String pseudo;
 
-    public Client(Socket socket, Serveur2 serveur) {
+    public Client(Socket socket, Serveur serveur) {
         this.socket = socket;
         this.serveur = serveur;
         try {
