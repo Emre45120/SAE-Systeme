@@ -1,65 +1,50 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.Scanner;
-/*
- * www.codeurjava.com
- */
-public class Client {
+import java.io.*;
+import java.net.*;
 
-    public static void main(String[] args){
-         Socket socket;
-        final BufferedReader in;
-        final PrintWriter out;
-        final Scanner sc = new Scanner(System.in);
+public class Client implements Runnable{
+    private Socket socket;
+    private BufferedReader in;
+    private PrintWriter out;
+    private Serveur2 serveur;
+    private String pseudo;
 
+    public Client(Socket socket, Serveur2 serveur) {
+        this.socket = socket;
+        this.serveur = serveur;
         try {
-            socket = new Socket("127.0.0.1", 4444);
-            out = new PrintWriter(socket.getOutputStream());
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            Thread envoyer = new Thread(new Runnable() {
-                String msg;
-                @Override
-                public void run() {
-                    while(true){
-                        msg = sc.nextLine();
-                        out.println(msg);
-                        out.flush();
-                    }
-                }
-            });
-
-            envoyer.start();
-
-            Thread recevoir = new Thread(new Runnable() {
-                String msg;
-                @Override
-                public void run() {
-                    try {
-                        msg = in.readLine();
-                        while(msg != null){
-                            System.out.println("Serveur : "+msg);
-                            msg = in.readLine();
-                        }
-                        System.out.println("Serveur déconnecté");
-                        out.close();
-                        socket.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println("Serveur : "+msg);
-                }
-            });
-
-            recevoir.start();
+            out = new PrintWriter(socket.getOutputStream());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
- 
+    public void run() {
+        try {
+            String msg = in.readLine();
+            while (msg != null) {
+                System.out.println("Client : " + msg);
+                msg = in.readLine();
+            }
+            System.out.println("Client déconnecté");
+            out.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void envoyer(String msg) {
+        out.println(msg);
+        out.flush();
+    }
+
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
+
 }
