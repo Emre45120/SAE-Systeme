@@ -13,17 +13,13 @@ public class Clientrecevoir implements Runnable {
     }
 
     public void run() {
-        try {
-            String msg = in.readLine();
-            while (msg != null) {
-                System.out.println("Client : " + msg);
-                msg = in.readLine();
+        while(true){
+            try {
+                String msg = in.readLine();
+                System.out.println(msg);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            System.out.println("Client déconnecté");
-            out.close();
-            execclient.socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

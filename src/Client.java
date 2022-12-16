@@ -12,8 +12,8 @@ public class Client implements Runnable{
         this.socket = socket;
         this.serveur = serveur;
         try {
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream());
+            this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.out =  new PrintWriter(socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -21,10 +21,11 @@ public class Client implements Runnable{
 
     public void run() {
         try {
-            String msg = in.readLine();
-            while (msg != null) {
+            boolean continuefr = true; 
+            while (continuefr) {
+                String msg = in.readLine();
                 System.out.println("Client : " + msg);
-                msg = in.readLine();
+                serveur.renvoyerMessage(msg, this);
             }
             System.out.println("Client déconnecté");
             out.close();
@@ -34,10 +35,18 @@ public class Client implements Runnable{
         }
     }
 
-    public void envoyer(String msg) {
+
+    public void renvoyerMessage(String msg){
         out.println(msg);
         out.flush();
+
+     
+        
+       
     }
+
+
+    
 
     public String getPseudo() {
         return pseudo;
