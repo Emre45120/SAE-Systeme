@@ -17,6 +17,7 @@ public class Execclient {
         }
     }
     
+    // erreur : le client ne peut pas recevoir de message
     public void lancerClient() {
         Thread t1 = new Thread(new Clientrecevoir(this));
         Thread t2 = new Thread(new Clientsend(this));

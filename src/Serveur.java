@@ -26,6 +26,15 @@ public class Serveur {
         }
     }
 
+
+    public void renvoyerMessage(String msg, Client client){
+        for (Client c : listeClients) {
+            if (c != client) {
+                c.renvoyerMessage(msg);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         Serveur serveur = new Serveur();
         serveur.lancerServeur();
