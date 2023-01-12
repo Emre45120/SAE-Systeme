@@ -10,7 +10,7 @@ public class Execclient {
     
     public Execclient() {
         try {
-            this.socket = new Socket("localhost", 4444);
+            this.socket = new Socket("192.168.13.127", 4444);
             this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.out = new PrintWriter(socket.getOutputStream());
         } catch (IOException e) {
